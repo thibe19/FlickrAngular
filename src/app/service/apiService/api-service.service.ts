@@ -6,16 +6,15 @@ import { Observable } from 'rxjs';
   providedIn: 'root'
 })
 export class ApiService {
-  datas = {};
+  datas: string[];
   apiKey = "535a87a2f2c770de1777c7a7931a724f";
   constructor(private http:HttpClient) { }
 
   searchByTag(tag:string){
     let apiURL = `https://www.flickr.com/services/rest/?method=flickr.photos.search&api_key=${this.apiKey}&tags=${tag}&format=json&nojsoncallback=1`;
     let datas = this.http.get(apiURL);
-    datas.subscribe((data) => this.datas = datas['photos']);
-    datas.subscribe((data) => console.log(data));
-
+    datas.subscribe((data) => this.datas = datas['photos']['photo']);
+    datas.subscribe((data) => console.log(data['photos']['photo']));
   }
   getDatas(){
     return this.datas;

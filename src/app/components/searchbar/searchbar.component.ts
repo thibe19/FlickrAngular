@@ -1,5 +1,6 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, Input, OnInit} from '@angular/core';
 import { ApiService } from 'src/app/service/apiService/api-service.service';
+import {GalleryComponent} from '../gallery/gallery.component';
 
 @Component({
   selector: 'searchbar',
@@ -7,7 +8,8 @@ import { ApiService } from 'src/app/service/apiService/api-service.service';
   styleUrls: ['./searchbar.component.css']
 })
 export class SearchbarComponent implements OnInit {
-  public tag = "";
+  public dataJson = null;
+  public tag = '';
   public datemin = null;
   public datemax = null;
 
@@ -24,5 +26,6 @@ export class SearchbarComponent implements OnInit {
       filters['max_upload_date'] = this.datemax;
       this.apiService.searchByTagAndFilter(this.tag,filters);
     }
+    this.dataJson = this.apiService.getDatas();
   }
 }
