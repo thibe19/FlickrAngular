@@ -8,13 +8,21 @@ import { ApiService } from 'src/app/service/apiService/api-service.service';
 })
 export class SearchbarComponent implements OnInit {
   public tag = "";
+  public datemin = null;
+  public datemax = null;
+
   constructor(private apiService:ApiService) { }
 
   ngOnInit() {
   }
-
   search(){
-    console.log(this.tag);
-    this.apiService.searchByTag(this.tag);
+    if(this.datemin == null && this.datemax == null ){
+      this.apiService.searchByTag(this.tag);
+    }else{
+      let filters = Array();
+      filters['min_upload_date'] = this.datemin;
+      filters['max_upload_date'] = this.datemax;
+      this.apiService.searchByTagAndFilter(this.tag,filters);
+    }
   }
 }
